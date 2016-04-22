@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AndroidM</string>
+    <string name="permision_available_contacts">Permisos disponibles.</string>
+    <string name="permissions_not_granted">Permisos no disponibles.</string>
+    <string name="permission_contacts_rationale">Deseas activar permisos para contactos?</string>
+    <string name="contact_details">Aqui van los detalles de contacto.</string>
+    <string name="habilitar_permisos_de_contactos">Habilitar permisos de contactos</string>
+</resources>
