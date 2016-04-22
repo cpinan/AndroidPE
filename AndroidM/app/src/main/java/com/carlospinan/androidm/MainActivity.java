@@ -16,9 +16,12 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final int REQUEST_CONTACTS = 0;
+    private static final int REQUEST_CAMERA = 1;
 
     private static String[] PERMISSIONS_CONTACT = {Manifest.permission.READ_CONTACTS,
             Manifest.permission.WRITE_CONTACTS};
+
+    private static String[] PERMISSION_CAMERA = {Manifest.permission.CAMERA};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +29,40 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         setContentView(R.layout.activity_main);
     }
 
-    /**
-     * Called when the 'show camera' button is clicked.
-     * Callback is defined in resource layout definition.
-     */
+    public void showCamera(View v) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestCameraPermissions();
+        } else {
+            showCamera();
+        }
+    }
+
+    private void requestCameraPermissions() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+            Snackbar.make(findViewById(R.id.container), R.string.permission_camera_rationale,
+                    Snackbar.LENGTH_INDEFINITE)
+                    .setAction(android.R.string.ok, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ActivityCompat
+                                    .requestPermissions(MainActivity.this, PERMISSION_CAMERA,
+                                            REQUEST_CAMERA);
+                        }
+                    })
+                    .show();
+        } else {
+            ActivityCompat.requestPermissions(this, PERMISSION_CAMERA, REQUEST_CAMERA);
+        }
+    }
+
+    private void showCamera() {
+        Snackbar.make(findViewById(R.id.container), R.string.camera_details,
+                Snackbar.LENGTH_SHORT)
+                .show();
+    }
+
+
     public void showContacts(View v) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED
@@ -82,7 +115,16 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                         Snackbar.LENGTH_SHORT)
                         .show();
             }
-
+        } else if (requestCode == REQUEST_CAMERA) {
+            if (PermissionUtil.verifyPermissions(grantResults)) {
+                Snackbar.make(findViewById(R.id.container), R.string.permision_available_contacts,
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+            } else {
+                Snackbar.make(findViewById(R.id.container), R.string.permissions_not_granted,
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+            }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }

@@ -5,4 +5,7 @@
     <string name="permission_contacts_rationale">Deseas activar permisos para contactos?</string>
     <string name="contact_details">Aqui van los detalles de contacto.</string>
     <string name="habilitar_permisos_de_contactos">Habilitar permisos de contactos</string>
+    <string name="permission_camera_rationale">Desea activar la camara?</string>
+    <string name="camera_details">Aquí carga la cámara</string>
+    <string name="habilitar_permisos_de_c_mara">Habilitar permisos de cámara</string>
 </resources>
